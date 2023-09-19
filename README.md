@@ -1,6 +1,6 @@
 # Portfolio-Website
 
-## A protfolio website to display all the projects that I have worked on so far
+A protfolio website to display all the projects that I have worked on so far
 
 <img src="./Screenshot (97).png" alt="screenshot">
 <img src="./Screenshot (98).png" alt="screenshot">
