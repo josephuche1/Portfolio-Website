@@ -1,0 +1,28 @@
+<%- include("partials/header.ejs") %>
+   <h1 class="text-center fw-bolder mt-4">
+      Add New Project
+   </h1>
+   <div class="container mt-5 border shadow-lg p-5 rounded">
+    <form action="/form" method="submit" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload an Image of your project:</label>
+            <input type="file" class="form-control" accept="image/x-png,image/gif,image/jpeg" name="image" required>
+        </div>
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="start" class="form-label">Start date:</label>
+           <input type="date" id="start" name="start-date" value="2024-12-30" class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label for="finish" class="form-label">Completion date:</label>
+           <input type="date" id="finish" name="end-date" value="2024-12-30"  class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Describe your new project: </label>
+            <textarea id="description" name="description" rows="5" cols="33" class="form-control" required></textarea>
+        </div>
+   </div>
+<%- include("partials/footer.ejs") %>
