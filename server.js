@@ -33,6 +33,7 @@ const projectSchema = new mongoose.Schema({
     startDate: String,
     endDate: String,
     timestamp: String, 
+    completed: String
 });
 
 const Project = mongoose.model("project", projectSchema);
@@ -47,21 +48,36 @@ conn.once('open', () => {
 });
 
 
-app.get("/", (req,res) => {
-    res.render("index.ejs");
+app.get("/", async (req,res) => {
+    const projects = await Project.find({});
+    res.render("index.ejs", {projects: projects});
 });
 
-app.get("/form", (req,res) => {
-    res.render("form.ejs");
+app.get("/admin", async (req, res) => {
+    const projects = await Project.find({});
+    res.render("index.ejs", {projects: projects, admin: true});
 });
 
-app.post("/form", (req,res) => {
-    // console.log(req.fields);
-    // console.log(req.files.image);
+app.get("/admin/project", (req,res) => {
+    res.render("project.ejs");
+});
+
+app.get("/admin/project/:id", async (req,res) => {
+    const id = req.params.id;
+    try{
+        const project = await Project.findById(id);
+        res.render("project.ejs", {project: project});
+    }
+    catch(err){
+        console.error(err.message);
+        res.render("project.ejs");
+    }
+
+    
+});
+
+app.post("/admin/project", async (req,res) => {
     const projectImage = req.files.image;
-    const date = new Date()
-    const d = date.getDate() + "/" + (date.getMonth()+1)  + "/" + date.getFullYear() + " | "+ date.getHours() + ":"  
-    + date.getMinutes();
 
     const buf = crypto.randomBytes(16);
     const filePath = buf.toString('hex')+ path.extname(projectImage.name);
@@ -84,10 +100,102 @@ app.post("/form", (req,res) => {
         description: req.fields.description,
         startDate: req.fields.start,
         endDate: req.fields.end,
-        timestamp: d
+        timestamp: new Date(),
+        completed:req.fields.completed || " "
     })
-    newProject.save();
+    await newProject.save();
+    uploadStream.on("finish", () => {
+        res.redirect(`/admin/project`);
+    });
+});
+
+app.patch("/admin/project/:id", async (req, res) => {
+    const id = req.params.id;
+    const project = await Project.findById(id);
+    const image = req.files.image;
+
+    if(image){
+        const oldImage = await gfs.find({filename:project.imageName}).toArray();
+        await gfs.delete(oldImage[0]._id);
+
+        const buf = crypto.randomBytes(16);
+        const filePath = buf.toString('hex')+ path.extname(image.name);
+    
+        const readStream = fs.createReadStream(image.path);
+    
+        const uploadStream = gfs.openUploadStream(filePath, {
+            chunkSizeBytes: 1048576,
+                metadata:{
+                    name: image.name,
+                    size: image.size, 
+                    type: image.type
+                }
+        });
+        readStream.pipe(uploadStream);
+        uploadStream.on("finish", () => {
+            res.sendStatus(200);
+        });
+    }
+
+    project.title = req.fields.title || project.title;
+    project.description = req.fields.description || project.description;
+    project.startDate = req.fields.start || project.startDate;
+    project.endDate = req.fields.end || project.endDate;
+    project.completed = req.fields.completed || project.completed;
+    project.time = new Date();
+    req.redirect("/");
+});
+
+app.delete("/admin/project/:id", async (req,res) => {
+    const id = req.params.id;
+    const project = await Project.findById(id);
+
+    const image = await gfs.find({filename: project.filename}).toArray();
+    await gfs.delete(image._id);
+
+    await Project.findByIdAndDelete({_id: id});
 })
+
+app.get("/view/:admin/:id", async (req, res) => {
+    const id = req.params.id;
+    const project = await Project.findById(id);
+    if(req.params.admin){
+        if(project){
+            res.render("viewProject.ejs", {project:project, admin:true});
+        }
+        else{
+            res.sendStatus(404);
+            res.redirect("/admin");
+        }
+    } else {
+        if(project){
+            res.render("viewProject.ejs", {project:project});
+        }
+        else{
+            res.sendStatus(404);
+            res.redirect("/");
+        }
+    }
+      
+});
+
+// Display project screenshot images
+app.get("/images/:filename", async (req, res) => {
+     try{
+        const file = await gfs.find({filename:req.params.filename}).toArray();
+        if(file.length === 0 || !file){
+            res.sendStatus(404);
+        } else{
+            const readStream = gfs.openDownloadStreamByName(req.params.filename);
+            readStream.pipe(res);
+        }
+    }catch(err){
+        res.status(404).send({Error: err.message});
+    }
+});
+
+
+
 
 app.listen(port, () => {
     console.log("Server is running from port 3000");
