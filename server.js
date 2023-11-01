@@ -50,7 +50,7 @@ conn.once('open', () => {
 
 app.get("/", async (req,res) => {
     const projects = await Project.find({});
-    res.render("index.ejs", {projects: projects});
+    res.render("index.ejs", {projects: projects, admin:false});
 });
 
 app.get("/admin", async (req, res) => {
@@ -66,7 +66,7 @@ app.get("/admin/project/:id", async (req,res) => {
     const id = req.params.id;
     try{
         const project = await Project.findById(id);
-        res.render("project.ejs", {project: project});
+        res.render("project.ejs", {project: project, admin:false});
     }
     catch(err){
         console.error(err.message);
@@ -109,15 +109,15 @@ app.post("/admin/project", async (req,res) => {
     });
 });
 
-app.patch("/admin/project/:id", async (req, res) => {
+app.post("/admin/project/:id", async (req, res) => {
     const id = req.params.id;
     const project = await Project.findById(id);
     const image = req.files.image;
 
-    if(image){
+    if(image.name !== ""){
         const oldImage = await gfs.find({filename:project.imageName}).toArray();
         await gfs.delete(oldImage[0]._id);
-
+        
         const buf = crypto.randomBytes(16);
         const filePath = buf.toString('hex')+ path.extname(image.name);
     
@@ -132,8 +132,9 @@ app.patch("/admin/project/:id", async (req, res) => {
                 }
         });
         readStream.pipe(uploadStream);
-        uploadStream.on("finish", () => {
-            res.sendStatus(200);
+        uploadStream.on("finish", async () => {
+            project.imageName = filePath;
+            await project.save();
         });
     }
 
@@ -143,7 +144,8 @@ app.patch("/admin/project/:id", async (req, res) => {
     project.endDate = req.fields.end || project.endDate;
     project.completed = req.fields.completed || project.completed;
     project.time = new Date();
-    req.redirect("/");
+    await project.save();
+    res.redirect("/admin");
 });
 
 app.delete("/admin/project/:id", async (req,res) => {
@@ -154,6 +156,7 @@ app.delete("/admin/project/:id", async (req,res) => {
     await gfs.delete(image._id);
 
     await Project.findByIdAndDelete({_id: id});
+    res.redirect("/admin");
 })
 
 app.get("/view/:admin/:id", async (req, res) => {
@@ -161,7 +164,7 @@ app.get("/view/:admin/:id", async (req, res) => {
     const project = await Project.findById(id);
     if(req.params.admin){
         if(project){
-            res.render("viewProject.ejs", {project:project, admin:true});
+            res.render("viewProject.ejs", {project:project});
         }
         else{
             res.sendStatus(404);

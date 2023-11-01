@@ -34,7 +34,7 @@
                           <p class="card-text"><%= project.description %></p>
                           <div class="d-flex justify-content-between align-items-center">
                              <div class="btn-group">
-                                 <a href="/view/<%= admin %>/<%= project._id %>" class="btn btn-sm btn-outline-secondary text-decoration-none">View</a>
+                                 <a href="/view/<%= locals.admin %>/<%= project._id %>" class="btn btn-sm btn-outline-secondary text-decoration-none">View</a>
                                  <a href="/admin/project/<%= project._id %>" class="btn btn-sm btn-outline-secondary">Edit</a>
                               </div>
                               <small class="text-body-secondary"><%= project.completed %></small>
