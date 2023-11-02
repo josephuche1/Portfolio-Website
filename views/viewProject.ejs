@@ -8,7 +8,7 @@
               <p class="card-text"><%= project.description %></p>
               <p class="card-text"><small class="text-body-secondary">Status: <%= project.completed %></small></p>
               <p class="card-text"><small class="text-body-secondary">Last Updated: <%= project.timestamp %></small></p>
-              <% if(locals.admin){ %>
+              <% if(admin){ %>
                 <a href="/admin"><button class="btn btn-outline-secondary me-3">Back</button></a>
               <% } else{ %>
                 <a href="/"><button class="btn btn-outline-secondary me-3">Back</button></a>
@@ -17,7 +17,7 @@
               <a href="#"><button class="btn btn-primary me-3">Visit Site</button></a>
               <a href="#"><button class="btn btn-primary me-3">Github Repository</button></a>
 
-              <% if(locals.admin){ %>
+              <% if(admin){ %>
                 <a href="#"><button class="btn btn-outline-secondary me-3">Edit</button></a>
                 <a href="#"><button class="btn btn-outline-danger me-3">Delete</button></a>
               <% } %>

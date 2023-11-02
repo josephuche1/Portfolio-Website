@@ -159,28 +159,17 @@ app.delete("/admin/project/:id", async (req,res) => {
     res.redirect("/admin");
 })
 
-app.get("/view/:admin/:id", async (req, res) => {
+app.get("/view/:id", async (req, res) => {
     const id = req.params.id;
     const project = await Project.findById(id);
-    if(req.params.admin){
-        if(project){
-            res.render("viewProject.ejs", {project:project});
-        }
-        else{
-            res.sendStatus(404);
-            res.redirect("/admin");
-        }
-    } else {
-        if(project){
-            res.render("viewProject.ejs", {project:project});
-        }
-        else{
-            res.sendStatus(404);
-            res.redirect("/");
-        }
-    }
-      
+    res.render("viewProject.ejs", {project:project, admin:false});     
 });
+
+app.get("/admin/view/:id", async (req, res) => {
+    const id = req.params.id;
+    const project = await Project.findById(id);
+    res.render("viewProject.ejs", {project:project, admin:true});
+})
 
 // Display project screenshot images
 app.get("/images/:filename", async (req, res) => {
