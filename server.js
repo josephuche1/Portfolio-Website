@@ -48,13 +48,23 @@ conn.once('open', () => {
 
 
 app.get("/", async (req,res) => {
-    const projects = await Project.find({});
-    res.render("index.ejs", {projects: projects, admin:false});
+    try{
+        const projects = await Project.find({});
+        res.render("index.ejs", {projects: projects, admin:false});
+    } catch(err){
+        console.log(err.message);
+        res.sendStatus(404);
+    }
 });
 
 app.get("/admin", async (req, res) => {
-    const projects = await Project.find({});
-    res.render("index.ejs", {projects: projects, admin: true});
+     try{
+        const projects = await Project.find({});
+        res.render("index.ejs", {projects: projects, admin: true});
+     }catch(err){
+        console.log(err.message);
+        res.redirect("/");
+     }
 });
 
 app.get("/admin/project", (req,res) => {
@@ -70,42 +80,46 @@ app.get("/admin/project/:id", async (req,res) => {
     catch(err){
         console.error(err.message);
         res.render("project.ejs");
-    }
-
-    
+    }   
 });
 
 app.post("/admin/project", async (req,res) => {
     const projectImage = req.files.image;
+    
+    try{
+        const buf = crypto.randomBytes(16);
+        const filePath = buf.toString('hex')+ path.extname(projectImage.name);
+    
+        const readStream = fs.createReadStream(projectImage.path);
+    
+        const uploadStream = gfs.openUploadStream(filePath, {
+            chunkSizeBytes: 1048576,
+                metadata:{
+                    name: projectImage.name,
+                    size: projectImage.size, 
+                    type: projectImage.type
+                }
+        });
+        readStream.pipe(uploadStream);
+    
+        const newProject = new Project({
+            imageName: filePath,
+            title: req.fields.title,
+            description: req.fields.description,
+            startDate: req.fields.start,
+            endDate: req.fields.end,
+            timestamp: new Date(),
+            completed:req.fields.completed || " "
+        })
+        await newProject.save();
+        uploadStream.on("finish", () => {
+            res.redirect(`/admin/project`);
+        });
+    }catch(err){
+        console.log(err.message);
+        res.sendStatus(500);
+    }
 
-    const buf = crypto.randomBytes(16);
-    const filePath = buf.toString('hex')+ path.extname(projectImage.name);
-
-    const readStream = fs.createReadStream(projectImage.path);
-
-    const uploadStream = gfs.openUploadStream(filePath, {
-        chunkSizeBytes: 1048576,
-            metadata:{
-                name: projectImage.name,
-                size: projectImage.size, 
-                type: projectImage.type
-            }
-    });
-    readStream.pipe(uploadStream);
-
-    const newProject = new Project({
-        imageName: filePath,
-        title: req.fields.title,
-        description: req.fields.description,
-        startDate: req.fields.start,
-        endDate: req.fields.end,
-        timestamp: new Date(),
-        completed:req.fields.completed || " "
-    })
-    await newProject.save();
-    uploadStream.on("finish", () => {
-        res.redirect(`/admin/project`);
-    });
 });
 
 app.post("/admin/project/:id", async (req, res) => {
@@ -113,63 +127,83 @@ app.post("/admin/project/:id", async (req, res) => {
     const project = await Project.findById(id);
     const image = req.files.image;
 
-    if(image.name !== ""){
-        const oldImage = await gfs.find({filename:project.imageName}).toArray();
-        await gfs.delete(oldImage[0]._id);
+    try{
+        if(image.name !== ""){
+            const oldImage = await gfs.find({filename:project.imageName}).toArray();
+            await gfs.delete(oldImage[0]._id);
+            
+            const buf = crypto.randomBytes(16);
+            const filePath = buf.toString('hex')+ path.extname(image.name);
         
-        const buf = crypto.randomBytes(16);
-        const filePath = buf.toString('hex')+ path.extname(image.name);
+            const readStream = fs.createReadStream(image.path);
+        
+            const uploadStream = gfs.openUploadStream(filePath, {
+                chunkSizeBytes: 1048576,
+                    metadata:{
+                        name: image.name,
+                        size: image.size, 
+                        type: image.type
+                    }
+            });
+            readStream.pipe(uploadStream);
+            uploadStream.on("finish", async () => {
+                project.imageName = filePath;
+                await project.save();
+            });
+        }
     
-        const readStream = fs.createReadStream(image.path);
-    
-        const uploadStream = gfs.openUploadStream(filePath, {
-            chunkSizeBytes: 1048576,
-                metadata:{
-                    name: image.name,
-                    size: image.size, 
-                    type: image.type
-                }
-        });
-        readStream.pipe(uploadStream);
-        uploadStream.on("finish", async () => {
-            project.imageName = filePath;
-            await project.save();
-        });
+        project.title = req.fields.title || project.title;
+        project.description = req.fields.description || project.description;
+        project.startDate = req.fields.start || project.startDate;
+        project.endDate = req.fields.end || project.endDate;
+        project.completed = req.fields.completed || project.completed;
+        project.github = req.fields.github || project.github;
+        project.site = req.fields.site || project.site;
+        project.time = new Date();
+        await project.save();
+        res.redirect("/admin");
+    }catch(err){
+        console.error(err.message);
+        res.redirect(`/admin/project/${id}`);
     }
-
-    project.title = req.fields.title || project.title;
-    project.description = req.fields.description || project.description;
-    project.startDate = req.fields.start || project.startDate;
-    project.endDate = req.fields.end || project.endDate;
-    project.completed = req.fields.completed || project.completed;
-    project.github = req.fields.github || project.github;
-    project.site = req.fields.site || project.site;
-    project.time = new Date();
-    await project.save();
-    res.redirect("/admin");
 });
 
 app.get("/admin/project/:id/delete", async (req,res) => {
-    const id = req.params.id;
-    const project = await Project.findById(id);
-
-    const image = await gfs.find({filename: project.imageName}).toArray();
-    await gfs.delete(image[0]._id);
-
-    await Project.findByIdAndDelete({_id: id});
-    res.redirect("/admin");
+     try{
+        const id = req.params.id;
+        const project = await Project.findById(id);
+    
+        const image = await gfs.find({filename: project.imageName}).toArray();
+        await gfs.delete(image[0]._id);
+    
+        await Project.findByIdAndDelete({_id: id});
+        res.redirect("/admin");
+    } catch(err){
+        console.log(err.message);
+        res.redirect(`/admin/view/${req.params.id}`);
+    }
 })
 
 app.get("/view/:id", async (req, res) => {
-    const id = req.params.id;
-    const project = await Project.findById(id);
-    res.render("viewProject.ejs", {project:project, admin:false});     
+    try{
+        const id = req.params.id;
+        const project = await Project.findById(id);
+        res.render("viewProject.ejs", {project:project, admin:false});
+    } catch(err){
+        console.log(err.message);
+        res.redirect(`/view/${req.params.id}`);
+    } 
 });
 
 app.get("/admin/view/:id", async (req, res) => {
-    const id = req.params.id;
-    const project = await Project.findById(id);
-    res.render("viewProject.ejs", {project:project, admin:true});
+    try{
+        const id = req.params.id;
+        const project = await Project.findById(id);
+        res.render("viewProject.ejs", {project:project, admin:true});
+    } catch(err){
+        res.sendStatus(404);
+    }
+
 })
 
 // Display project screenshot images
