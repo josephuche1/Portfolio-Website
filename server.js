@@ -9,7 +9,6 @@ import crypto from "crypto";
 import bcrypt from "bcrypt";
 
 const app = express();
-const port = 3000;
 
 const mongoURI = "mongodb+srv://admin-joseph:olisa312@cluster0.pxzmyq9.mongodb.net/portfolio-projects"
 // Connect to mongodb database
@@ -190,6 +189,11 @@ app.get("/images/:filename", async (req, res) => {
     }
 });
 
+
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
 
 app.listen(port, () => {
     console.log("Server is running from port 3000");
