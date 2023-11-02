@@ -8,7 +8,9 @@ import crypto from "crypto";
 
 const app = express();
 
-const mongoURI = "mongodb+srv://admin-joseph:olisa312@cluster0.pxzmyq9.mongodb.net/portfolio-projects"
+const username = encodeURIComponent("admin-joseph");
+const password = encodeURIComponent("olisa312");
+const mongoURI = `mongodb+srv://${username}:${password}@cluster0.pxzmyq9.mongodb.net/portfolio-projects`;
 // Connect to mongodb database
 mongoose.connect(mongoURI)
     .then(() =>{
@@ -49,12 +51,8 @@ conn.once('open', () => {
 
 app.get("/", async (req,res) => {
     try{
-        await Project.find({}).then((projects) =>{
-            res.render("index.ejs", {projects: projects, admin:false});
-        }).catch((err) => {
-            console.error(err.maessage);
-            res.sendStatus(404);
-        })
+        const projects = await Project.find({});
+        res.render("index.ejs", {projects: projects, admin:false});
         
     } catch(err){
         console.log(err.message);
