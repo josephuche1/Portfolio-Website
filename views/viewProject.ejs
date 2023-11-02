@@ -1,5 +1,5 @@
 <%- include("partials/header.ejs") %>
-  <section id="project">
+<section id="project">
       <div class="container shadow-lg">
         <div class="card mb-3">
             <img src="/images/<%= project.imageName %>" class="card-img-top" alt="...">
@@ -25,5 +25,28 @@
             </div>
           </div>
       </div>
-  </section>
+</section>
+<script>
+      let theme = localStorage.getItem("theme") || "dark"; // Default to "dark" if not set
+
+      // Select the theme button
+      let themeButton = $("button#theme");
+
+    // Function to update the theme
+    function updateTheme() {
+      if (theme === "dark") {
+          themeButton.text("Light Mode");
+          themeButton.removeClass("btn-dark").addClass("btn-light shadow");
+      } else {
+          themeButton.text("Dark Mode");
+          themeButton.removeClass("btn-light").addClass("btn-dark shadow");
+     }
+
+    // Set the data-bs-theme attribute for Bootstrap
+     $("html").attr("data-bs-theme", theme);
+  }
+
+  // Initialize the theme
+  updateTheme();
+</script>
 <%- include("partials/footer.ejs") %>
