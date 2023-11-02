@@ -1,5 +1,5 @@
 <%- include("partials/header.ejs") %>
-
+   <button id="theme" class="btn btn-light m-3 fw-bold">Light Mode</button>
    <section id="hero" >
     <div class="container col-xxl-8 px-4 py-0">
         <div class="row flex-lg-row-reverse align-items-center g-5 pt-5 pb-2">
@@ -71,5 +71,27 @@
         </footer>
       </div>
    </section>
+
+  <script>
+      $(document).ready(() => {
+        let theme = "dark";
+        let themeButton = $("button#theme");
+        console.log("button clicked");
+        themeButton.on("click", () =>{
+          $("html").attr("data-bs-theme", () => {
+             if(theme === "dark"){
+                theme = "light";
+                themeButton.text("Dark Mode");
+                themeButton.toggleClass("btn-dark btn-light");
+                return theme;
+             }
+             theme = "dark";
+             themeButton.text("Light Mode");
+             themeButton.toggleClass("btn-dark btn-light");
+             return theme;
+          });
+        });
+      });
+  </script>
    
-   <%- include("partials/footer.ejs") %>
+<%- include("partials/footer.ejs") %>
