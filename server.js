@@ -49,8 +49,13 @@ conn.once('open', () => {
 
 app.get("/", async (req,res) => {
     try{
-        const projects = await Project.find({});
-        res.render("index.ejs", {projects: projects, admin:false});
+        await Project.find({}).then((projects) =>{
+            res.render("index.ejs", {projects: projects, admin:false});
+        }).catch((err) => {
+            console.error(err.maessage);
+            res.sendStatus(404);
+        })
+        
     } catch(err){
         console.log(err.message);
         res.sendStatus(500);
