@@ -1,12 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
-import _ from "lodash";
 import fs from "fs";
 import formidableMiddleware from "express-formidable";
 import mongodb from "mongodb";
 import path from "path";
 import crypto from "crypto";
-import bcrypt from "bcrypt";
 
 const app = express();
 
