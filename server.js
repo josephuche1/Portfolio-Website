@@ -148,12 +148,12 @@ app.post("/admin/project/:id", async (req, res) => {
     res.redirect("/admin");
 });
 
-app.delete("/admin/project/:id", async (req,res) => {
+app.get("/admin/project/:id/delete", async (req,res) => {
     const id = req.params.id;
     const project = await Project.findById(id);
 
-    const image = await gfs.find({filename: project.filename}).toArray();
-    await gfs.delete(image._id);
+    const image = await gfs.find({filename: project.imageName}).toArray();
+    await gfs.delete(image[0]._id);
 
     await Project.findByIdAndDelete({_id: id});
     res.redirect("/admin");

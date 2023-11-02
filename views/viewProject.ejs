@@ -14,12 +14,12 @@
                 <a href="/"><button class="btn btn-outline-secondary me-3">Back</button></a>
               <% } %>
               
-              <a href="#"><button class="btn btn-primary me-3">Visit Site</button></a>
-              <a href="#"><button class="btn btn-primary me-3">Github Repository</button></a>
+              <a href="<%= project.site %>"><button class="btn btn-primary me-3">Visit Site</button></a>
+              <a href="<%= project.github %>"><button class="btn btn-primary me-3">Github Repository</button></a>
 
               <% if(admin){ %>
-                <a href="#"><button class="btn btn-outline-secondary me-3">Edit</button></a>
-                <a href="#"><button class="btn btn-outline-danger me-3">Delete</button></a>
+                <a href="/admin/project/<%= project._id %>"><button class="btn btn-outline-secondary me-3">Edit</button></a>
+                <a href="/admin/project/<%= project._id %>/delete"><button class="btn btn-outline-danger me-3">Delete</button></a>
               <% } %>
 
             </div>
