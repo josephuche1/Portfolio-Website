@@ -192,6 +192,7 @@ app.get("/images/:filename", async (req, res) => {
 app.get('/favicon.ico', (req, res) => res.sendStatus(204));
 
 let port = process.env.PORT;
+
 if (port == null || port == "") {
   port = 3000;
 }
