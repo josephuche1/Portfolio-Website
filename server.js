@@ -53,7 +53,7 @@ app.get("/", async (req,res) => {
         res.render("index.ejs", {projects: projects, admin:false});
     } catch(err){
         console.log(err.message);
-        res.sendStatus(404);
+        res.sendStatus(500);
     }
 });
 
