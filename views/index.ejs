@@ -28,7 +28,7 @@
            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                <% projects.forEach((project) => {%>
                  <div class="col">
-                    <div class="card shadow-sm">
+                    <div class="card shadow ">
                       <img src="/images/<%= project.imageName %>" width="100%" height="225" alt="...">
                       <div class="card-body">
                           <p class="fw-bolder fs-5"><%= project.title %></p>
@@ -73,24 +73,40 @@
    </section>
 
   <script>
-      $(document).ready(() => {
-        let theme = "dark";
-        let themeButton = $("button#theme");
-        console.log("button clicked");
-        themeButton.on("click", () =>{
-          $("html").attr("data-bs-theme", () => {
-             if(theme === "dark"){
-                theme = "light";
-                themeButton.text("Dark Mode");
-                themeButton.toggleClass("btn-dark btn-light");
-                return theme;
-             }
-             theme = "dark";
-             themeButton.text("Light Mode");
-             themeButton.toggleClass("btn-dark btn-light");
-             return theme;
-          });
-        });
+     $(document).ready(() => {
+         // Check if the theme preference is stored in local storage
+         let theme = localStorage.getItem("theme") || "dark"; // Default to "dark" if not set
+
+         // Select the theme button
+         let themeButton = $("button#theme");
+
+        // Function to update the theme
+        function updateTheme() {
+          if (theme === "dark") {
+            themeButton.text("Light Mode");
+            themeButton.removeClass("btn-dark").addClass("btn-light shadow");
+          } else {
+            themeButton.text("Dark Mode");
+            themeButton.removeClass("btn-light").addClass("btn-dark shadow");
+          }
+
+          // Set the data-bs-theme attribute for Bootstrap
+          $("html").attr("data-bs-theme", theme);
+       }
+
+       // Initialize the theme
+       updateTheme();
+ 
+       // Toggle the theme on button click
+       themeButton.on("click", () => {
+          theme = theme === "dark" ? "light" : "dark";
+
+          // Store the selected theme in local storage
+          localStorage.setItem("theme", theme);
+
+          // Update the theme
+          updateTheme();
+       });
       });
   </script>
    

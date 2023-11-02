@@ -90,4 +90,27 @@
     <% } %>
     <a href="/admin"><button class="btn btn-danger mt-3">Exit</button></a>  
 </div>
+<script>
+    let theme = localStorage.getItem("theme") || "dark"; // Default to "dark" if not set
+
+    // Select the theme button
+    let themeButton = $("button#theme");
+
+  // Function to update the theme
+  function updateTheme() {
+    if (theme === "dark") {
+        themeButton.text("Light Mode");
+        themeButton.removeClass("btn-dark").addClass("btn-light shadow");
+    } else {
+        themeButton.text("Dark Mode");
+        themeButton.removeClass("btn-light").addClass("btn-dark shadow");
+   }
+
+  // Set the data-bs-theme attribute for Bootstrap
+   $("html").attr("data-bs-theme", theme);
+  }
+
+  // Initialize the theme
+  updateTheme();
+</script>
 <%- include("partials/footer.ejs") %>
