@@ -33,7 +33,9 @@ const projectSchema = new mongoose.Schema({
     startDate: String,
     endDate: String,
     timestamp: String, 
-    completed: String
+    completed: String, 
+    github: String,
+    site: String,
 });
 
 const Project = mongoose.model("project", projectSchema);
@@ -143,6 +145,8 @@ app.post("/admin/project/:id", async (req, res) => {
     project.startDate = req.fields.start || project.startDate;
     project.endDate = req.fields.end || project.endDate;
     project.completed = req.fields.completed || project.completed;
+    project.github = req.fields.github || project.github;
+    project.site = req.fields.site || project.site;
     project.time = new Date();
     await project.save();
     res.redirect("/admin");
@@ -185,8 +189,6 @@ app.get("/images/:filename", async (req, res) => {
         res.status(404).send({Error: err.message});
     }
 });
-
-
 
 
 app.listen(port, () => {
