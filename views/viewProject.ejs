@@ -9,21 +9,21 @@
               <p class="card-text"><small class="text-body-secondary">Status: <%= project.completed %></small></p>
               <p class="card-text"><small class="text-body-secondary">Last Updated: <%= project.timestamp %></small></p>
               <% if(admin){ %>
-                <a href="/admin"><button class="btn btn-outline-secondary me-3">Back</button></a>
+                <a href="/admin"><button class="btn btn-outline-secondary m-3">Back</button></a>
               <% } else{ %>
-                <a href="/"><button class="btn btn-outline-secondary me-3">Back</button></a>
+                <a href="/"><button class="btn btn-outline-secondary m-3 ms-0">Back</button></a>
               <% } %>
               <% if(project.site && project.site !== "") { %>
-                <a href="<%= project.site %>" target="_blank"><button class="btn btn-primary me-3" >Visit Site</button></a>
+                <a href="<%= project.site %>" target="_blank"><button class="btn btn-primary m-3 ms-0" >Visit Site</button></a>
               <% } %>
 
               <% if(project.github && project.gitbub !== ""){ %>
-                <a href="<%= project.github %>" target="_blank"><button class="btn btn-primary me-3">Github Repository</button></a>
+                <a href="<%= project.github %>" target="_blank"><button class="btn btn-primary m-3 ms-0">Github Repository</button></a>
               <% } %>
 
               <% if(admin){ %>
-                <a href="/admin/project/<%= project._id %>"><button class="btn btn-outline-secondary me-3">Edit</button></a>
-                <a href="/admin/project/<%= project._id %>/delete"><button class="btn btn-outline-danger me-3">Delete</button></a>
+                <a href="/admin/project/<%= project._id %>"><button class="btn btn-outline-secondary m-3 ms-0">Edit</button></a>
+                <a href="/admin/project/<%= project._id %>/delete"><button class="btn btn-outline-danger m-3 ms-0">Delete</button></a>
               <% } %>
 
             </div>
