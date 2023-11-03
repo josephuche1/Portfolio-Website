@@ -13,9 +13,13 @@
               <% } else{ %>
                 <a href="/"><button class="btn btn-outline-secondary me-3">Back</button></a>
               <% } %>
-              
-              <a href="<%= project.site %>"><button class="btn btn-primary me-3">Visit Site</button></a>
-              <a href="<%= project.github %>"><button class="btn btn-primary me-3">Github Repository</button></a>
+              <% if(project.site && project.site !== "") { %>
+                <a href="<%= project.site %>"><button class="btn btn-primary me-3">Visit Site</button></a>
+              <% } %>
+
+              <% if(project.github && project.gitbub !== ""){ %>
+                <a href="<%= project.github %>"><button class="btn btn-primary me-3">Github Repository</button></a>
+              <% } %>
 
               <% if(admin){ %>
                 <a href="/admin/project/<%= project._id %>"><button class="btn btn-outline-secondary me-3">Edit</button></a>
