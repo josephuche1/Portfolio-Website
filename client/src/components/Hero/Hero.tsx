@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import IHeroStyles from './HeroInterfaces';
+import Typography from '@mui/material/Typography';
 
 interface IHeroProps {
     title: string;
@@ -12,8 +13,12 @@ const Hero: React.FC<IHeroProps> = (props) => {
   return (
     <Box style={HeroStyles.container}>
         <Box style={HeroStyles.InnerBox} >
-            <h1 style={HeroStyles.title}>{props.title}</h1>
-            <p style={HeroStyles.body}>{props.body}</p>
+            <Typography variant="h1" style={HeroStyles.title}>
+                {props.title}
+            </Typography>
+            <Typography variant="body1" style={HeroStyles.body}>
+                {props.body}
+            </Typography>
         </Box>
         <Box style={HeroStyles.overlay} />
     </Box>
@@ -54,11 +59,13 @@ const HeroStyles: IHeroStyles = {
         bottom: 0,
         boxShadow: 'inset 300px 40px 100px 10px rgba(0,0,0,0.9), inset -300px -40px 100px 10px rgba(0,0,0,1)', // Adjust shadow as needed
         zIndex: 1,
+        height: '100%',
     },
     title: {
         fontFamily: "Oswald, sans-serif",
         fontSize: '3rem',
         margin: '0',
+        fontWeight: 'bold',
     },
     body: {
         fontFamily: "Rubik, sans-serif",

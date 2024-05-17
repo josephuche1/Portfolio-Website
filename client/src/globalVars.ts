@@ -1,0 +1,1 @@
+export let maincolor = '#FF9F66';
