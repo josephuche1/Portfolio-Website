@@ -27,7 +27,8 @@ const ProjectCard: React.FC<IProjectCardProps> = ({title,  image}) => {
           color: "white",
           fontWeight: "bold",
           fontSize: "2rem",
-          textWrap: "wrap",
+          textWrap: "nowrap",
+          width: 250
         }}>
             {title}
         </Typography>
