@@ -23,7 +23,7 @@ const ProjectCard: React.FC<IProjectCardProps> = ({title,  image}) => {
         borderRadius: "10px",
         padding: "10px",
     }}>
-        <Typography variant="h4" style={{
+        <Typography variant="h6" style={{
           color: "white",
           fontWeight: "bold",
           fontSize: "2rem",
