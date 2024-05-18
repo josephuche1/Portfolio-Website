@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography';
 import { maincolor, fontFamily } from '../../globalVars';
 import ProjectCard from '../../components/ProjrctCard/ProjectCard';
 import Grid from '@mui/material/Grid';
-import { display } from '@mui/system';
 
 const ProjectsPage = () => {
   return (
