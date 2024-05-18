@@ -44,7 +44,8 @@ const HeroStyles: IHeroStyles = {
     InnerBox: {
         padding: '20px',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',  // Add a semi-transparent background color
-        height: '100%', // Set the height of the inner box
+        height: '100vh', // Set the height of the inner box
+        width: '90%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -59,7 +60,8 @@ const HeroStyles: IHeroStyles = {
         bottom: 0,
         boxShadow: 'inset 300px 40px 100px 10px rgba(0,0,0,0.9), inset -300px -40px 100px 10px rgba(0,0,0,1)', // Adjust shadow as needed
         zIndex: 1,
-        height: '100%',
+        height: '100vh',
+        width: '100%',
     },
     title: {
         fontFamily: "Oswald, sans-serif",
