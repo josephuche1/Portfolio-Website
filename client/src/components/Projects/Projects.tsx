@@ -8,7 +8,7 @@ import useDragToScroll from '../../hooks/UseDragToScroll';
 const Projects: React.FC = () => {
   const ScrollRef = useRef<HTMLDivElement>(null);
   useDragToScroll(ScrollRef);
-  
+
   return (
     <Box style={{
       backgroundColor: "black",
@@ -28,7 +28,6 @@ const Projects: React.FC = () => {
       <Box ref={ScrollRef} style={{
         display: "flex",
         overflowX: "auto",
-        scrollBehavior: "smooth",
         scrollbarWidth: "none",
         cursor: "grab",
       }}>
