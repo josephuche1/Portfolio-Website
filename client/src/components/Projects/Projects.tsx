@@ -13,7 +13,7 @@ const Projects: React.FC = () => {
     <Box style={{
       backgroundColor: "black",
       padding: "20px",
-
+      marginTop: "-20px",
     }}>
       <Box>
         <Typography variant="h4" style={{
@@ -21,6 +21,7 @@ const Projects: React.FC = () => {
           fontWeight: "bold",
           fontFamily: "Oswald, sans-serif",
           textAlign: "center",
+          marginBottom: "40px",
         }}>
           Projects
         </Typography>

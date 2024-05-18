@@ -10,7 +10,6 @@ const Header: React.FC = () => {
       <Box
         style={{
           display: 'flex',
-          gap: '40px',
           flexDirection: 'row',
           marginRight: '30px',
         }}
@@ -32,7 +31,7 @@ const HeaderStyles : IHeaderStyles = {
         justifyContent: 'flex-end',
         alignItems: 'center',
         position: 'fixed',
-        width: '100vw',
+        width: '100%',
         zIndex: 4,
         paddingBottom: "0px",
         // borderBottom: '1px solid #FF9F66',

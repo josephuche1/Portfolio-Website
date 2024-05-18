@@ -29,19 +29,19 @@ const ProjectsPage = () => {
             height: '90%',
             width: '90%',
         }}>
-            <Grid item xs={3}>
+            <Grid item sm={12} md={3}>
                 <ProjectCard title="Project 1" image="https://via.placeholder.com/150" />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item sm={12} md={3} >
                 <ProjectCard title="Project 2" image="https://via.placeholder.com/150" />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item sm={12} md={3}>
                 <ProjectCard title="Project 3" image="https://via.placeholder.com/150" />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item sm={12} md={3} >
                 <ProjectCard title="Project 4" image="https://via.placeholder.com/150" />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item sm={12} md={3}>
                 <ProjectCard title="Project 5" image="https://via.placeholder.com/150" />
             </Grid>
         </Grid>
