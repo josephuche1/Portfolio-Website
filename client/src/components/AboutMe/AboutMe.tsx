@@ -2,7 +2,6 @@ import React from 'react'
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { maincolor, fontFamily } from '../../globalVars';
-import zIndex from '@mui/material/styles/zIndex';
 
 interface IAboutMeProps {
   description: string;
