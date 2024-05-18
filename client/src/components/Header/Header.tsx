@@ -1,6 +1,5 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import IHeaderStyles from './HeaderInterfaces';
 import TabItem from '../TabItem/TabItem';
 
