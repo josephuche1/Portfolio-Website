@@ -17,7 +17,6 @@ const Header: React.FC = () => {
         }}
       >
         <TabItem title="Home" linkto="/" />
-        <TabItem title="About" linkto="/about" />
         <TabItem title="Projects" linkto="/projects" />
         <TabItem title="Contact" linkto="/contact" />
       </Box>
@@ -27,7 +26,7 @@ const Header: React.FC = () => {
 
 const HeaderStyles : IHeaderStyles = {
     container: {
-        backgroundColor: 'transparent',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
         padding: '10px',
         display: 'flex',
         height: '5vh',
