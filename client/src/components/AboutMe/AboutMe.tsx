@@ -14,7 +14,7 @@ const AboutMe: React.FC<IAboutMeProps> = ({description}) => {
       padding: "50px",
       backgroundColor: "rgb(0, 0, 0, 1)",
       boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-      height: "60vh",
+      height: "60%",
     }}>
       <Typography variant="h4" style={{
         textAlign: "center",
@@ -22,14 +22,17 @@ const AboutMe: React.FC<IAboutMeProps> = ({description}) => {
         color: maincolor,
         fontWeight: "bold",
         fontFamily: "Oswaldo, sans-serif",
+        marginTop: "100px",
+        paddingTop: "50px",
       }}>
         About Me
       </Typography>
       <Box style={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "flex-start",
         height: "100%",
+        margin: "0px 20px",
       }}>
         <Typography variant="body1" style={{
           textAlign: "center",
