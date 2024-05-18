@@ -2,6 +2,7 @@ import React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { Link } from 'react-router-dom'
+import { fontFamily } from '../../globalVars'
 
 interface ITabItemProps {
     title: string;
@@ -19,10 +20,10 @@ const TabItem: React.FC<ITabItemProps> = ({title, linkto}) => {
         <Typography variant="h6" 
           style={{
             color: 'white', 
-            fontFamily: "Oswaldo, sans-serif",
+            fontFamily: fontFamily,
             textTransform: 'uppercase',
-            fontWeight: 100,
-            fontSize: '15px',
+            fontWeight: 300,
+            fontSize: '20px',
           }}
         >
             {title}

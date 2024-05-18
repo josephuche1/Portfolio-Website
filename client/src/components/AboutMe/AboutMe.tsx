@@ -1,8 +1,7 @@
 import React from 'react'
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { maincolor } from '../../globalVars';
-import { display, height } from '@mui/system';
+import { maincolor, fontFamily } from '../../globalVars';
 
 interface IAboutMeProps {
   description: string;
@@ -21,7 +20,7 @@ const AboutMe: React.FC<IAboutMeProps> = ({description}) => {
         padding: "20px 0px",
         color: maincolor,
         fontWeight: "bold",
-        fontFamily: "Oswaldo, sans-serif",
+        fontFamily: fontFamily,
         marginTop: "100px",
         paddingTop: "50px",
       }}>
@@ -37,7 +36,6 @@ const AboutMe: React.FC<IAboutMeProps> = ({description}) => {
         <Typography variant="body1" style={{
           textAlign: "center",
           color: "white",
-          fontFamily: "Oswaldo, sans-serif",
           fontSize: "1.2rem",
         }}>
           {description}
