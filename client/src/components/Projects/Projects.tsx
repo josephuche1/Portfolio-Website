@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import ProjectCard from '../ProjrctCard/ProjectCard';
+import ProjectCard from '../ProjectCard/ProjectCard';
 import { maincolor } from '../../globalVars';
 import useDragToScroll from '../../hooks/UseDragToScroll';
 

@@ -8,3 +8,8 @@ export default interface IHeroStyles {
     title: CSSProperties;
     body: CSSProperties;
 }
+
+export interface IHeroProps {
+    title: string;
+    body: string;
+}
