@@ -2,6 +2,7 @@ import app from './app';
 import mongoose, {Error} from 'mongoose';
 import env from './utils/validateEnv';
 import { GridFSBucket } from 'mongodb';
+import { initializeGridFs } from './utils/gridFsConfig';
 
 const port = env.PORT; // Get the port from the environment variables
 let gfs:  GridFSBucket; // Initialize the GridFSBucket object
@@ -10,6 +11,7 @@ let gfs:  GridFSBucket; // Initialize the GridFSBucket object
 mongoose.connect(env.MONGO_URI)
     .then(() => {
         console.log("Successfully connected to the database");
+        initializeGridFs(gfs) // Initialize the GridFSBucket object
         app.listen(port, () => {
             console.log("Server is running on port: ", port);
         })
