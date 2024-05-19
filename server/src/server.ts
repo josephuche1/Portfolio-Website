@@ -12,6 +12,7 @@ mongoose.connect(env.MONGO_URI)
     .then(() => {
         console.log("Successfully connected to the database");
         initializeGridFs(gfs) // Initialize the GridFSBucket object
+        console.log("GridFSBucket object initialized");
         app.listen(port, () => {
             console.log("Server is running on port: ", port);
         })
