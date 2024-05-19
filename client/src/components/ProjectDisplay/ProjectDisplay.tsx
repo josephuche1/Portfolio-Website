@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import ProjectCard from "../ProjectCard/ProjectCard";
 
-const ProjectDisplay = () => {
+const ProjectDisplay : React.FC = () => {
   return (
     <Grid container xs={12} style={{
         width: '100%',
