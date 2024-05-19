@@ -16,7 +16,7 @@ const Header: React.FC = () => {
       >
         <TabItem title="Home" linkto="/" />
         <TabItem title="Projects" linkto="/projects" />
-        <TabItem title="Contact" linkto="/contact" />
+        <TabItem title="Link Tree" linkto="/link-tree" />
       </Box>
     </Box>
   )
