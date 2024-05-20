@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import HomePage from './pages/HomePage/HomePage';
 import ProjectsPage from './pages/ProjectsPage/ProjectsPage';
 import LinkTree from './pages/LinkTree/LinkTree';
+import ProjectShow from './pages/ProjectShow/ProjectShow';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route index path="/" element={<HomePage />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/linktree" element={<LinkTree />} />
+        <Route path="/projects/:id" element={<ProjectShow />} />
         {/* <Route path="*" element={<h1>404 Not Found</h1>} /> */}
       </Routes>
     </Router>
