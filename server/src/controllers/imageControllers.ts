@@ -38,3 +38,17 @@ export const uploadImage: RequestHandler = async (req, res, next) => {
 
 // @desc    Delete image
 // @route   DELETE /image/:filename
+export const deleteImage: RequestHandler = async (req, res, next) => {
+    const { filename } = req.params;
+    try{
+        const file = await gfs.find({filename: filename}).toArray();
+        if(file && file.length !== 0){
+            await gfs.delete(file[0]._id);
+            res.json({status: EServerResponseStatus.SUCCESS, message: "Image deleted"});
+        } else {
+            res.json({status: EServerResponseStatus.NOT_FOUND, message: "Image not found"});
+        }
+    } catch(err: unknown){
+        next(err);
+    }
+}

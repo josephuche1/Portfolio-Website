@@ -2,6 +2,7 @@ import "dotenv/config"; // Load the environment variables from the .env file
 import env from "./utils/validateEnv";
 import express, {Request, Response, NextFunction} from 'express';
 import projectRoutes from './routes/projectRoutes';
+import imageRoutes from './routes/imageRoutes';
 import cors from 'cors';
 
 
@@ -13,6 +14,7 @@ app.use(cors({
 }))
 
 app.use("/api/projects", projectRoutes);
+app.use("/api/images", imageRoutes);
 
 // Cutom middleware to handle errors
 const errorHandler =  (err: unknown, req: Request, res: Response, next: NextFunction) => { 
