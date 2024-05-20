@@ -1,3 +1,4 @@
+import "dotenv/config"; // Load the environment variables from the .env file
 import env from "./utils/validateEnv";
 import express, {Request, Response, NextFunction} from 'express';
 import projectRoutes from './routes/projectRoutes';

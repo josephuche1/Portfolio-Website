@@ -14,3 +14,7 @@ export interface IProject {
     technologies: string[];
     link: string;
 }
+
+export interface IImage {
+    image: string;
+}

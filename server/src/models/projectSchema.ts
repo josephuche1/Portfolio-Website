@@ -1,4 +1,3 @@
-import { time } from "console";
 import { InferSchemaType, Schema, model } from "mongoose";
 
 // Define the schema for the project collection
