@@ -1,10 +1,17 @@
-import "dotenv/config";
+import env from "./utils/validateEnv";
 import express, {Request, Response, NextFunction} from 'express';
-import projectToutes from './routes/projectRoutes';
+import projectRoutes from './routes/projectRoutes';
+import cors from 'cors';
+
 
 const app = express();
+app.use(cors({
+    origin: env.CLIENT_URI,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
+}))
 
-app.use("/api/projects", projectToutes);
+app.use("/api/projects", projectRoutes);
 
 // Cutom middleware to handle errors
 const errorHandler =  (err: unknown, req: Request, res: Response, next: NextFunction) => { 
