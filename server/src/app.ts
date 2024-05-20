@@ -1,7 +1,10 @@
 import "dotenv/config";
 import express, {Request, Response, NextFunction} from 'express';
+import projectToutes from './routes/projectRoutes';
 
 const app = express();
+
+app.use("/api/projects", projectToutes);
 
 // Cutom middleware to handle errors
 const errorHandler =  (err: unknown, req: Request, res: Response, next: NextFunction) => { 
