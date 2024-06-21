@@ -8,8 +8,9 @@ import { Link } from 'react-router-dom';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Container, HeroSection, Title, ShortDesc, TagsContainer, FullDescriptionTitle } from './ProjectShowStyles';
 
+
 const ProjectShow:React.FC = () => {
-    // const { id } = useParams();
+  const { id } = useParams();
   return (
     <Container>
        <HeroSection>

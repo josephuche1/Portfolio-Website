@@ -7,11 +7,14 @@ import cors from 'cors';
 
 
 const app = express();
+
 app.use(cors({
     origin: env.CLIENT_URI,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
-}))
+}));
+
+app.use(express.json()); // This needs to be before any routes are handled
 
 app.use("/api/projects", projectRoutes);
 app.use("/api/images", imageRoutes);
