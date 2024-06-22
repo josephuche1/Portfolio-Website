@@ -21,6 +21,6 @@ mongoose.connect(env.MONGO_URI)
         console.error("An error occurred while connecting to the database: ", err.message);
     })
  
-export const conn = mongoose.connection; // Export the connection object for testing purposes
+export const conn: mongoose.Connection = mongoose.connection; // Export the connection object for testing purposes
 
 export { gfs }; // Export the GridFSBucket object for testing purposes
