@@ -21,19 +21,17 @@ export const getImage: RequestHandler = async (req, res, next) => {
 // @desc    Upload image
 // @route   POST /image/upload
 export const uploadImage: RequestHandler = async (req, res, next) => {
-    let imagesFilenames: string[] = [];
     try{
         if(!req.files || req.files.length === 0) {
             return res.json({status: EServerResponseStatus.ERROR, message: "No file uploaded"});
         } 
         const images = req.files as Express.Multer.File[];
-        images.forEach((image: Express.Multer.File) => {
-            imagesFilenames.push(image.filename);
-        });
+        const imagesFilenames : String[] = images.map((image: Express.Multer.File) => image.filename);
         res.json({status: EServerResponseStatus.SUCCESS, message: "Image uploaded", images: imagesFilenames});
     }catch(err: unknown){
         next(err);
     }
+    
 }
 
 // @desc    Delete image

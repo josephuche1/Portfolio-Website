@@ -6,6 +6,7 @@ import { storage } from './storageSetup';
 
 export const initializeGridFs = (gfs: GridFSBucket) => {
     conn.once("open", () => {
+        console.log("Connection to database established");
         gfs = new GridFSBucket(conn.db, {
             bucketName: env.BUCKET_NAME
         })
