@@ -1,7 +1,7 @@
 import multer from 'multer';
 import env from "./validateEnv";
 import  { conn } from '../server';
-import { GridFSBucket } from 'mongodb';
+import { GridFSBucket, Db } from 'mongodb';
 import { storage } from './storageSetup';
 
 export const initializeGridFs = (gfs: GridFSBucket) => {
