@@ -4,12 +4,13 @@ import Tooltip from '@mui/material/Tooltip';
 
 interface ITagProps {
     name: string;
+    description?: string;
     onClick?: () => void;
 }
 
-const Tags: React.FC<ITagProps> = ({ name }) => {
+const Tags: React.FC<ITagProps> = ({ name, description }) => {
   return (
-    <Tooltip title={name}>
+    <Tooltip title={description}>
         <Chip label={name} style={{
             backgroundColor: 'white',
             color: 'black',
