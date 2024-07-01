@@ -4,6 +4,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 interface ITagProps {
     name: string;
+    onClick?: () => void;
 }
 
 const Tags: React.FC<ITagProps> = ({ name }) => {
